@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Deconto", "API\Deconto.csproj", "{932915F1-B7B7-4302-B9FB-6DC5E289B0D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Deconto", "Deconto\Deconto.csproj", "{F32DE653-92B2-4949-8748-6C62D9E83E8A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{932915F1-B7B7-4302-B9FB-6DC5E289B0D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{932915F1-B7B7-4302-B9FB-6DC5E289B0D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{932915F1-B7B7-4302-B9FB-6DC5E289B0D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{932915F1-B7B7-4302-B9FB-6DC5E289B0D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F32DE653-92B2-4949-8748-6C62D9E83E8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F32DE653-92B2-4949-8748-6C62D9E83E8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F32DE653-92B2-4949-8748-6C62D9E83E8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F32DE653-92B2-4949-8748-6C62D9E83E8A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
