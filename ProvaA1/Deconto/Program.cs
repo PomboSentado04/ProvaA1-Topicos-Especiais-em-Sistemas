@@ -3,6 +3,19 @@ using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDataContext>();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("ReactPolicy",
+        policy =>
+        {
+            policy
+                .AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
+
 var app = builder.Build();
 
 //POST: /api/livro/popular
@@ -54,9 +67,7 @@ app.MapGet("/api/livro/listar",
 });
 
 //GET: /api/livro/buscar/{nome}
-app.MapGet("/api/livro/buscar/{nome}",
-    ([FromRoute] string nome,
-    [FromServices] AppDataContext ctx) =>
+app.MapGet("/api/livro/buscar/{nome}", ([FromRoute] string nome, [FromServices] AppDataContext ctx) =>
 {
     Livro? resultado = ctx.Livros.FirstOrDefault(x => x.Nome == nome);
 
@@ -71,13 +82,14 @@ app.MapGet("/api/livro/buscar/{nome}",
 //PUT: /api/livro/emprestar/{id}
 app.MapPut("/api/livro/emprestar/{id}", ([FromRoute] int id, [FromServices] AppDataContext ctx) =>
 {
-    Livro? resultado = ctx.Livros.Find(id);
+    Livro? resultado = ctx.Livros.FirstOrDefault(x => x.Id == id);
 
     if (resultado is not null)
     {
         if (resultado.EstaDisponivel == true)
         {
             resultado.EstaDisponivel = false;
+            resultado.QtdEmprestimos += 1;
             ctx.Livros.Update(resultado);
             ctx.SaveChanges();
             return Results.Ok("Livro Emprestado");
@@ -107,8 +119,7 @@ app.MapPut("/api/livro/devolver/{id}", ([FromRoute] int id, [FromServices] AppDa
 });
 
 //GET: /api/livro/disponiveis
-app.MapGet("/api/livro/disponiveis",
-    ([FromServices] AppDataContext ctx) =>
+app.MapGet("/api/livro/disponiveis", ([FromServices] AppDataContext ctx) =>
 {
     if (ctx.Livros.Where(x => x.EstaDisponivel == true).Any())
     {
@@ -119,8 +130,7 @@ app.MapGet("/api/livro/disponiveis",
 });
 
 //GET: /api/livro/emprestados
-app.MapGet("/api/livro/emprestados",
-    ([FromServices] AppDataContext ctx) =>
+app.MapGet("/api/livro/emprestados", ([FromServices] AppDataContext ctx) =>
 {
     if (ctx.Livros.Where(x => x.EstaDisponivel == false).Any())
     {
@@ -130,4 +140,16 @@ app.MapGet("/api/livro/emprestados",
     return Results.NotFound("Lista de livros vazia!");
 });
 
+//GET: /api/livro/emprestados
+app.MapGet("/api/livro/maisemprestado", ([FromServices] AppDataContext ctx) =>
+{
+    if (ctx.Livros.Any())
+    {
+        //Configurar a resposta da requisição
+        return Results.Ok(ctx.Livros.FirstOrDefault(x => x.QtdEmprestimos == ctx.Livros.Select(x => x.QtdEmprestimos).Max()));
+    }
+    return Results.NotFound("Lista de livros vazia!");
+});
+
+app.UseCors("ReactPolicy");
 app.Run();

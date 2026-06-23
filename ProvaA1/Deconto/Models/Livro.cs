@@ -6,5 +6,6 @@ public class Livro
     public string? Nome { get; set; }
     public string? Autor { get; set; }
     public bool EstaDisponivel { get; set; } = true;
+    public int QtdEmprestimos { get; set; } = 0;
     public DateTime CriadoEm { get; set; } = DateTime.Now;
 }
