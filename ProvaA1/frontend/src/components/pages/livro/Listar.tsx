@@ -19,7 +19,7 @@ function ListarServicos() {
         }
     }
 
-    async function emprestarLivro(id : string){
+    async function emprestarLivro(id : number){
         try {
             const resposta = await api.put(`/api/livro/emprestar/${id}`);
             carregarLivroAPI();
@@ -28,7 +28,7 @@ function ListarServicos() {
         }
     }
 
-    async function devolverLivro(id : string){
+    async function devolverLivro(id : number){
         try {
             const resposta = await api.put(`/api/livro/devolver/${id}`);
             carregarLivroAPI();
@@ -61,13 +61,13 @@ function ListarServicos() {
                             <td>{livro.estaDisponivel ? "Disponível" : "Indisponível"}</td>
                             <td>{livro.qtdEmprestimos}</td>
                             <td>
-                                <button>
-                                    Deletar
+                                <button onClick={() => emprestarLivro(Number(livro.id))}>
+                                    Emprestar
                                 </button>
                             </td>
                             <td>
-                                <button>
-                                    Deletar
+                                <button onClick={() => devolverLivro(Number(livro.id))}>
+                                    Devolver
                                 </button>
                             </td>
                         </tr>

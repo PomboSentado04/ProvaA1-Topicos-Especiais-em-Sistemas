@@ -28,7 +28,7 @@ function CadastrarLivro() {
     }
 
     return (
-        <div className="CadastrarServico">
+        <div>
             <h1>Cadastrar Serviço</h1>
             <form onSubmit={enviarLivroAPI}>
                 <div>
